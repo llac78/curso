@@ -30,7 +30,7 @@ public class PerfilTesteConfig implements CommandLineRunner {
 	public PedidoRepositorio pedidoRepositorio;
 	
 	@Autowired
-	public CategoriaRepositorio cegoriaRepositorio;
+	public CategoriaRepositorio categoriaRepositorio;
 	
 	@Autowired
 	public ProdutoRepositorio produtoRepositorio;
@@ -56,6 +56,9 @@ public class PerfilTesteConfig implements CommandLineRunner {
 		Produto p4 = new Produto(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
 		Produto p5 = new Produto(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 
+		categoriaRepositorio.saveAll(Arrays.asList(c1, c2, c3));
+		produtoRepositorio.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
 		p1.getCategorias().add(c2);
 		p2.getCategorias().add(c1);
 		p2.getCategorias().add(c3);
@@ -63,10 +66,10 @@ public class PerfilTesteConfig implements CommandLineRunner {
 		p4.getCategorias().add(c3);
 		p5.getCategorias().add(c2);
 
+		produtoRepositorio.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
 
 		usuarioRepositorio.saveAll(Arrays.asList(u1, u2));
 		pedidoRepositorio.saveAll(Arrays.asList(o1, o2, o3)); 	
-		cegoriaRepositorio.saveAll(Arrays.asList(c1, c2, c3));
-		produtoRepositorio.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 	}
 }
