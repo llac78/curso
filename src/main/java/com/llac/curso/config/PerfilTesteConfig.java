@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.llac.curso.entidades.Categoria;
 import com.llac.curso.entidades.ItemPedido;
+import com.llac.curso.entidades.Pagamento;
 import com.llac.curso.entidades.Pedido;
 import com.llac.curso.entidades.Produto;
 import com.llac.curso.entidades.Usuario;
@@ -83,5 +84,10 @@ public class PerfilTesteConfig implements CommandLineRunner {
 		ItemPedido ip4 = new ItemPedido(o3, p5, 2, p5.getPreco());
 		
 		itemPedidoRepositorio.saveAll(Arrays.asList(ip1, ip2, ip3, ip4));
+		
+		Pagamento pg1 = new Pagamento(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPagamento(pg1);
+		pedidoRepositorio.save(o1); 
+
 	}
 }
