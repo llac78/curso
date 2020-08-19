@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.llac.curso.entidades.Categoria;
+import com.llac.curso.entidades.ItemPedido;
 import com.llac.curso.entidades.Pedido;
 import com.llac.curso.entidades.Produto;
 import com.llac.curso.entidades.Usuario;
 import com.llac.curso.enums.PedidoStatus;
 import com.llac.curso.repositorios.CategoriaRepositorio;
+import com.llac.curso.repositorios.ItemPedidoRepositorio;
 import com.llac.curso.repositorios.PedidoRepositorio;
 import com.llac.curso.repositorios.ProdutoRepositorio;
 import com.llac.curso.repositorios.UsuarioRepositorio;
@@ -24,16 +26,20 @@ public class PerfilTesteConfig implements CommandLineRunner {
 
 	// injeção de dependência
 	@Autowired
-	public UsuarioRepositorio usuarioRepositorio;
+	private UsuarioRepositorio usuarioRepositorio;
 
 	@Autowired
-	public PedidoRepositorio pedidoRepositorio;
+	private PedidoRepositorio pedidoRepositorio;
 	
 	@Autowired
-	public CategoriaRepositorio categoriaRepositorio;
+	private CategoriaRepositorio categoriaRepositorio;
 	
 	@Autowired
-	public ProdutoRepositorio produtoRepositorio;
+	private ProdutoRepositorio produtoRepositorio;
+	
+	@Autowired
+	private ItemPedidoRepositorio itemPedidoRepositorio;
+
 
 	// será executado quando a aplicação iniciar
 	@Override
@@ -67,9 +73,15 @@ public class PerfilTesteConfig implements CommandLineRunner {
 		p5.getCategorias().add(c2);
 
 		produtoRepositorio.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
-
-
+		
 		usuarioRepositorio.saveAll(Arrays.asList(u1, u2));
-		pedidoRepositorio.saveAll(Arrays.asList(o1, o2, o3)); 	
+		pedidoRepositorio.saveAll(Arrays.asList(o1, o2, o3)); 
+		
+		ItemPedido ip1 = new ItemPedido(o1, p1, 2, p1.getPreco());
+		ItemPedido ip2 = new ItemPedido(o1, p3, 1, p4.getPreco());
+		ItemPedido ip3 = new ItemPedido(o2, p3, 2, p1.getPreco());
+		ItemPedido ip4 = new ItemPedido(o3, p5, 2, p5.getPreco());
+		
+		itemPedidoRepositorio.saveAll(Arrays.asList(ip1, ip2, ip3, ip4));
 	}
 }
