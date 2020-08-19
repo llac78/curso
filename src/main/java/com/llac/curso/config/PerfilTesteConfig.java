@@ -10,14 +10,16 @@ import org.springframework.context.annotation.Profile;
 
 import com.llac.curso.entidades.Categoria;
 import com.llac.curso.entidades.Pedido;
+import com.llac.curso.entidades.Produto;
 import com.llac.curso.entidades.Usuario;
 import com.llac.curso.enums.PedidoStatus;
 import com.llac.curso.repositorios.CategoriaRepositorio;
 import com.llac.curso.repositorios.PedidoRepositorio;
+import com.llac.curso.repositorios.ProdutoRepositorio;
 import com.llac.curso.repositorios.UsuarioRepositorio;
 
 @Configuration
-@Profile("test") // deve ser o mesmo nome contido no arquivo application.properties
+@Profile("test") // deve ser o mesmo nome contido no arquivo applicion.properties
 public class PerfilTesteConfig implements CommandLineRunner {
 
 	// injeção de dependência
@@ -28,7 +30,10 @@ public class PerfilTesteConfig implements CommandLineRunner {
 	public PedidoRepositorio pedidoRepositorio;
 	
 	@Autowired
-	public CategoriaRepositorio categoriaRepositorio;
+	public CategoriaRepositorio cegoriaRepositorio;
+	
+	@Autowired
+	public ProdutoRepositorio produtoRepositorio;
 
 	// será executado quando a aplicação iniciar
 	@Override
@@ -45,9 +50,23 @@ public class PerfilTesteConfig implements CommandLineRunner {
 		Categoria c2 = new Categoria(null, "Livros");
 		Categoria c3 = new Categoria(null, "Computadores");
 		
+		Produto p1 = new Produto(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
+		Produto p2 = new Produto(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
+		Produto p3 = new Produto(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
+		Produto p4 = new Produto(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
+		Produto p5 = new Produto(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
+
+		p1.getCategorias().add(c2);
+		p2.getCategorias().add(c1);
+		p2.getCategorias().add(c3);
+		p3.getCategorias().add(c3);
+		p4.getCategorias().add(c3);
+		p5.getCategorias().add(c2);
+
 
 		usuarioRepositorio.saveAll(Arrays.asList(u1, u2));
 		pedidoRepositorio.saveAll(Arrays.asList(o1, o2, o3)); 	
-		categoriaRepositorio.saveAll(Arrays.asList(c1, c2, c3));
+		cegoriaRepositorio.saveAll(Arrays.asList(c1, c2, c3));
+		produtoRepositorio.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 	}
 }
