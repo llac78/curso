@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.llac.curso.entidades.Usuario;
 import com.llac.curso.repositorios.UsuarioRepositorio;
+import com.llac.curso.services.exceptions.RecursoNaoEncontradoException;
 
 @Service
 public class UsuarioService {
@@ -22,7 +23,9 @@ public class UsuarioService {
 	public Usuario buscarPorId(Long id) {
 		Optional<Usuario> usuario = repositorio.findById(id);
 		
-		return usuario.get(); // o método get() retorna o objeto do tipo contido no Optional, no caso, tipo Usuario 
+		//return usuario.get(); // o método get() retorna o objeto do tipo contido no Optional, no caso, tipo Usuario 
+		
+		return usuario.orElseThrow(() -> new RecursoNaoEncontradoException(id) ); // tenta fazer o get. Caso não exista o usuario, lança uma Exception
 	}
 	
 	public Usuario inserir(Usuario usuario) {
