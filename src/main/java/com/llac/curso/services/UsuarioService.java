@@ -3,6 +3,8 @@ package com.llac.curso.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -48,10 +50,15 @@ public class UsuarioService {
 	}
 	
 	public Usuario atualizar(Long id, Usuario usuario) {
-		Usuario entidade = repositorio.getOne(id); // getOne instancia um objeto com o id ao invés de consultar no DB por id
-		atualizarDados(entidade, usuario);
-		
-		return repositorio.save(entidade);
+		try {
+			Usuario entidade = repositorio.getOne(id); // getOne instancia um objeto com o id ao invés de consultar no DB por id
+			atualizarDados(entidade, usuario);
+			
+			return repositorio.save(entidade);
+			
+		} catch (EntityNotFoundException e) {
+			throw new RecursoNaoEncontradoException(id);
+		}
 	}
 
 	private void atualizarDados(Usuario entidade, Usuario usuario) {
