@@ -1,4 +1,4 @@
-package com.llac.curso.entidades;
+	package com.llac.curso.entidades;
 
 import java.io.Serializable;
 import java.util.ArrayList;

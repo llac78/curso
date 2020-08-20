@@ -24,4 +24,8 @@ public class UsuarioService {
 		
 		return usuario.get(); // o método get() retorna o objeto do tipo contido no Optional, no caso, tipo Usuario 
 	}
+	
+	public Usuario inserir(Usuario usuario) {
+		return repositorio.save(usuario);
+	}
 }
